@@ -2,14 +2,14 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const PORT = 3000;
-// const users = require('./routes/users');
+const users = require('./routes/users');
 
-// app.use('/api/users', users);
+app.use('/api/users', users);
 
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 
-// app.use(express.static(path.resolve(__dirname, './client')));
+app.use(express.static(path.resolve(__dirname, './client')));
 
 app.get('/api', (req, res) => {
   res.send('hello world from express!');

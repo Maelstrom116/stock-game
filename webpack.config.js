@@ -2,8 +2,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
-  entry: './server/server.js',
+  mode: process.env.NODE_ENV,
+  entry: './server.js',
   output: {
     filename: 'bundle.js',
     // publicPath: '/build/',

@@ -1,17 +1,8 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import MainContainer from './containers/MainContainer.js';
+import Users from './User.js';
 
 const App = () => {
-  const [backendData, setBackendData] = useState([]);
-
-  useEffect(() => {
-    fetch('/api').then((response) =>
-      response.json().then((data) => {
-        setBackendData(data);
-      })
-    );
-  }, []);
-
   return (
     <div id='app'>
       <h1
@@ -23,6 +14,7 @@ const App = () => {
         Hello World! Let's buy some stocks!
       </h1>
       <MainContainer />
+      <Users />
     </div>
   );
 };
