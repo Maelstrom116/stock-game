@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './components/index.js',
+  entry: './server.js',
   output: {
     filename: 'bundle.js',
     // publicPath: '/build/',
@@ -30,10 +30,12 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Development',
-      template: './components/index.html',
+      template: './client/index.html',
     }),
   ],
   devServer: {
@@ -44,12 +46,4 @@ module.exports = {
       '/api': 'http://localhost:8080',
     },
   },
-  // devServer: {
-  //   static: {
-  //     directory: path.join(__dirname, 'public'),
-  //   },
-  //   allowedHosts: 'auto',
-  //   compress: true,
-  //   port: 8080,
-  // },
 };
