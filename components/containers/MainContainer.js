@@ -1,5 +1,7 @@
 import React from 'react';
 
-return <div>I like bananas</div>;
+const mainContainer = (props) => {
+  return <div>I like bananas</div>;
+};
 
 export default MainContainer;

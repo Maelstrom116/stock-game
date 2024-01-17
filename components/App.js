@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import MainContainer from './containers/MainContainer';
-require('dotenv').config();
 
 const App = () => {
   <div id='app'>
-    <h1>Hello World!</h1>
+    <h1>Hello World! Let's buy some stocks!</h1>
     <MainContainer />
   </div>;
 };
