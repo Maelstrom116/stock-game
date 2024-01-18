@@ -11,30 +11,30 @@ const Holding = (props) => {
       });
   }, []);
 
-  // fetch('/db')
-  //   .then((data) => data.json())
-  //   .then((data) => {
-  //     console.log(data);
-  //     const stocks = data;
-  //   });
+  const array = [];
+  for (let i = data.length - 1; i >= 0; i--) {
+    array.push(
+      <div key={i} style={{ padding: '5px' }}>
+        {data[i]}
+      </div>
+    );
+  }
 
-  // const stocksArray = stocks;
-  // const array = [];
-  // const runPortfolio = () => {
-  //   fetch('/db')
-  //     .then((data) => data.json())
-  //     .then((data) => {
-  //       data.forEach(obj => {
-  //         array.push(obj);
-  //       })
-  //     });
-  // };
-  // console.log(array);
-
-  const test = data[0];
-  console.log(test);
-
-  return <div>one</div>;
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '15px',
+        border: 'solid 3px black',
+        borderRadius: '15px',
+        backgroundColor: 'lightblue',
+      }}
+    >
+      {array}
+    </div>
+  );
 };
 
 export default Holding;

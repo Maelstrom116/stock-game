@@ -6,20 +6,23 @@ stocksController.getPrices = (req, res, next) => {
   console.log('---> ENTERING GET PRICE STOCKS CONTROLLER <---');
   console.log('req.params: ', req.params);
   const ticker = req.params.id;
-  const url1 = 'https://api.polygon.io/v2/aggs/ticker/';
   const url2 =
     '/range/1/day/2023-01-09/2023-01-09?apiKey=w79pptWA9LPbLe_4Gjg83M9Ip4ywV2up';
+  const url1 = 'https://api.polygon.io/v2/aggs/ticker/';
   const url = url1 + ticker + url2;
-  fetch(
-    url
-    // 'https://api.polygon.io/v2/aggs/ticker/F/range/1/day/2023-01-09/2023-01-09?apiKey=w79pptWA9LPbLe_4Gjg83M9Ip4ywV2up'
-  )
+  fetch(url)
     .then((res) => res.json())
     .then((data) => {
       res.locals.test = data.results[0].o;
       return next();
+    })
+    .catch((err) => {
+      return next({
+        log: 'Error occurred in fetchMongo Controller',
+        status: 500,
+        message: { err: 'An error occurred.' },
+      });
     });
-  //ADD SOME ERROR HANDELING with a CATCH
 };
 
 stocksController.fetchMongo = async (req, res, next) => {
@@ -30,10 +33,10 @@ stocksController.fetchMongo = async (req, res, next) => {
     stockList.forEach((stock) => {
       const newStock = [];
       newStock.push(
-        stock.ticker,
-        stock.price,
-        stock.quantity,
-        stock.totalValue
+        `Ticker: ${stock.ticker} || `,
+        `Share Price: $${stock.price} || `,
+        `Quantity: ${stock.quantity} || `,
+        `Total Purchase: $${stock.totalValue} `
       );
       stockArray.push(newStock);
     });

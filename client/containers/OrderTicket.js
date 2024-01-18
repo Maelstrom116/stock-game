@@ -47,6 +47,7 @@ const OrderTicket = (props) => {
     alert(
       `You bought ${quantity} ${ticker} shares for $${data} per share and in total spent $${totalValue}.\n\n Press OK to continue.`
     );
+    window.location.reload();
   };
 
   return (
