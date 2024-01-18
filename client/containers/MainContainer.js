@@ -11,7 +11,7 @@ const MainContainer = (props) => {
         alignItems: 'center',
       }}
     >
-      <OrderTicket />
+      <OrderTicket  />
       <Portfolio />
     </div>
   );

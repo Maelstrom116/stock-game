@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './server.js',
+  entry: './client/index.js',
   output: {
     filename: 'bundle.js',
     // publicPath: '/build/',
@@ -43,7 +43,7 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
     },
     proxy: {
-      '/api': 'http://localhost:8080',
+      '/api': 'http://localhost:3000',
     },
   },
 };
