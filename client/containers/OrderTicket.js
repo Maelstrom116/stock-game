@@ -18,15 +18,44 @@ const OrderTicket = (props) => {
   const handleBuy = (event) => {
     event.preventDefault();
     console.log("HEY, I'M BUYING HERE");
-    const amount = document.getElementById('quantity').value;
-    const stock = document.getElementById('tickerForm').value.toUpperCase();
-    const total = data * amount;
+    const quantity = document.getElementById('quantity').value;
+    const ticker = document.getElementById('tickerForm').value.toUpperCase();
+    const price = data;
+    const totalValue = data * quantity;
+
+    // const sendMongo = { ticker, price, quantity, totalValue };
+
+    // console.log(`sendMongo: `, sendMongo);
+
+    fetch('/db', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ticker, price, quantity, totalValue }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error in sendMongo');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Data Received: ', data);
+      });
+
     console.log(
-      `You bought ${amount} ${stock} shares for $${data} per share and in total spent $${total}`
+      `You bought ${quantity} ${ticker} shares for $${data} per share and in total spent $${totalValue}`
     );
     alert(
-      `You bought ${amount} ${stock} shares for $${data} per share and in total spent $${total}.\n\n Press OK to continue.`
+      `You bought ${quantity} ${ticker} shares for $${data} per share and in total spent $${totalValue}.\n\n Press OK to continue.`
     );
+
+    /*
+    Next step is to create a post request to Mongo DB with the order information
+    Then have fetch data to populate purchases in the portfolio section
+    fetch()
+    */
   };
 
   // useEffect(() => {
@@ -39,12 +68,19 @@ const OrderTicket = (props) => {
 
   return (
     <div>
-      <form>
-        <label
-          style={{
-            marginLeft: '10px',
-          }}
-        >
+      <form
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'left',
+          border: 'solid 3px black',
+          padding: '15px',
+          borderRadius: '15px',
+          backgroundColor: 'lightblue',
+        }}
+      >
+        <label>
           Ticker
           <input type='text' id='tickerForm' name='stock' placeholder='AAPL' />
           <button
@@ -57,21 +93,15 @@ const OrderTicket = (props) => {
         </label>
         <label
           style={{
-            marginLeft: '40px',
-            marginRight: '40px',
+            marginTop: '10px',
+            marginBottom: '10px',
           }}
         >
           Price ${data}
-          {/* <input
-            type='text'
-            name='stockPrice'
-            placeholder='----------'
-            disabled='true'
-          /> */}
         </label>
         <label
           style={{
-            margin: '10px',
+            marginBottom: '25px',
           }}
         >
           Quantity
@@ -79,16 +109,10 @@ const OrderTicket = (props) => {
             type='text'
             id='quantity'
             name='quantity'
-            placeholder='100.50'
+            placeholder='100 (no fractional shares)'
           />
         </label>
-        <button
-          style={{
-            marginLeft: '10px',
-          }}
-          id='buyBtn'
-          onClick={handleBuy}
-        >
+        <button id='buyBtn' onClick={handleBuy}>
           Buy
         </button>
       </form>

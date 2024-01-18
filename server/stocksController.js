@@ -1,5 +1,6 @@
 const http = require('https');
 const stocksController = {};
+const model = require('./stocksModel.js');
 
 stocksController.getPrices = (req, res, next) => {
   console.log('---> ENTERING GET PRICE STOCKS CONTROLLER <---');
@@ -18,6 +19,44 @@ stocksController.getPrices = (req, res, next) => {
       res.locals.test = data.results[0].o;
       return next();
     });
+  //ADD SOME ERROR HANDELING with a CATCH
 };
 
+stocksController.fetchMongo = async (req, res, next) => {
+  try {
+    const stockList = await model.Stocks.find();
+    console.log(stockList);
+    res.locals.stockList = stockList;
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error occurred in fetchMongo Controller',
+      status: 500,
+      message: { err: 'An error occurred.' },
+    });
+  }
+};
+
+stocksController.postMongo = async (req, res, next) => {
+  try {
+    console.log('---> ENTERING POST MONGO CONTROLLER <---');
+    // console.log(req.params); //Do you have any params?
+    const { ticker, price, quantity, totalValue } = req.body;
+    const newStock = await model.Stocks.create({
+      ticker,
+      price,
+      quantity,
+      totalValue,
+    });
+    console.log(`Sent to Mongo`);
+    res.locals.postMongo = newStock;
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error occurred in postMongo Controller',
+      status: 500,
+      message: { err: 'An error occurred.' },
+    });
+  }
+};
 module.exports = stocksController;

@@ -15,12 +15,33 @@ app.get('/api/:id', stocksController.getPrices, (req, res) => {
   res.status(200).json(res.locals.test);
 });
 
+app.get('/db', stocksController.fetchMongo, (req, res) => {
+  console.log('---> ENTERING DB ROUTER FETCH MONGO <---');
+  res.status(200);
+});
+
+app.post('/db', stocksController.postMongo, (req, res) => {
+  console.log('---> ENTERING DB ROUTER POST MONGO <---');
+  res.status(201).json(res.locals.postMongo);
+});
+
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 app.use((req, res) => {
   res.status(404).send('This is not where you trade stonks');
+});
+
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
 });
 
 app.listen(PORT, () => {
