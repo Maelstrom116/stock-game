@@ -18,16 +18,12 @@ const App = () => {
         style={{
           display: 'flex',
           justifyContent: 'center',
+          fontSize: '40px',
         }}
       >
         Hello World! Let's buy some stocks!
       </h1>
       <MainContainer data={data} />
-      {/* {typeof data.users === 'undefined' ? (
-        <p>Loading...</p>
-      ) : (
-        data.users.map((user, i) => <p key={i}>{user}</p>)
-      )} */}
     </div>
   );
 };
