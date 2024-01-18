@@ -25,8 +25,19 @@ stocksController.getPrices = (req, res, next) => {
 stocksController.fetchMongo = async (req, res, next) => {
   try {
     const stockList = await model.Stocks.find();
-    console.log(stockList);
-    res.locals.stockList = stockList;
+    console.log(stockList[0].ticker);
+    const stockArray = [];
+    stockList.forEach((stock) => {
+      const newStock = [];
+      newStock.push(
+        stock.ticker,
+        stock.price,
+        stock.quantity,
+        stock.totalValue
+      );
+      stockArray.push(newStock);
+    });
+    res.locals.stockList = stockArray;
     return next();
   } catch (err) {
     return next({

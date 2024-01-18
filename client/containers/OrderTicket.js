@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+const Holding = require('./Holding.js');
 
 const OrderTicket = (props) => {
   const [data, setData] = useState([]);
@@ -23,10 +24,6 @@ const OrderTicket = (props) => {
     const price = data;
     const totalValue = data * quantity;
 
-    // const sendMongo = { ticker, price, quantity, totalValue };
-
-    // console.log(`sendMongo: `, sendMongo);
-
     fetch('/db', {
       method: 'POST',
       headers: {
@@ -50,21 +47,7 @@ const OrderTicket = (props) => {
     alert(
       `You bought ${quantity} ${ticker} shares for $${data} per share and in total spent $${totalValue}.\n\n Press OK to continue.`
     );
-
-    /*
-    Next step is to create a post request to Mongo DB with the order information
-    Then have fetch data to populate purchases in the portfolio section
-    fetch()
-    */
   };
-
-  // useEffect(() => {
-  //   fetch(`/api/aapl`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setData(data);
-  //     });
-  // });
 
   return (
     <div>

@@ -17,7 +17,7 @@ app.get('/api/:id', stocksController.getPrices, (req, res) => {
 
 app.get('/db', stocksController.fetchMongo, (req, res) => {
   console.log('---> ENTERING DB ROUTER FETCH MONGO <---');
-  res.status(200);
+  res.status(200).json(res.locals.stockList);
 });
 
 app.post('/db', stocksController.postMongo, (req, res) => {
@@ -46,6 +46,6 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}`);
-}); // listens to port 3000
+}); // listens to port
 
 module.exports = app;
